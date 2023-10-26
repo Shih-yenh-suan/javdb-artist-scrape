@@ -6,7 +6,7 @@ import time
 import re
 from lxml import etree
 
-baseUrl = "https://javdb.com/"
+baseUrl = "https://javdb522.com/"
 header = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0'}
 
@@ -23,7 +23,15 @@ def getArtistMainPage(artist):
 
     artistURL = parsedHtmls.xpath('//div[@class = "box actor-box"]/a/@href')
     artistURL = [baseUrl + artistURL for artistURL in artistURL]
-    return artistURL[0]
+
+    artistName = parsedHtmls.xpath('//div[@class = "box actor-box"]/a/@title')
+    print("检查到如下结果（每个编号对应一位演员）：")
+    for index, item in enumerate(artistName):
+        print(f"{index + 1}: {item}")
+
+    artist_index = input("请输入演员编号：")
+    artist_index = int(artist_index) - 1
+    return artistURL[artist_index]
 
 
 def getMetaData(url, page):
@@ -102,7 +110,7 @@ def retry_on_failure(func):
     try:
         result = func()
         return result
-    except Exception as e:
+    except ConnectionError as e:
         print(f'错误: {e}, 暂停 3 秒')
         time.sleep(3)
         return retry_on_failure(func)
@@ -110,12 +118,14 @@ def retry_on_failure(func):
 
 def main():
 
-    path = f""
+    path = input("请输入文件夹保存路径")
 
     artist = input("想要爬取哪位？（需要输入准确的结果）")
     page = 1
 
     csvPath = path + "\\" + artist + '.csv'
+    print(f"文件将保存到{csvPath}")
+
     if os.path.exists(csvPath):
         os.remove(csvPath)
 
