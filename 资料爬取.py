@@ -110,8 +110,8 @@ def retry_on_failure(func):
     try:
         result = func()
         return result
-    except ConnectionError as e:
-        print(f'错误: {e}, 暂停 3 秒')
+    except:
+        print(f'错误, 暂停 3 秒')
         time.sleep(3)
         return retry_on_failure(func)
 
