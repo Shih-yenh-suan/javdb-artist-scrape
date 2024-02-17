@@ -73,7 +73,7 @@ def getMetaData(url, page):
 
 def SaveData(path, data):
     df = pd.DataFrame(data)
-    df.to_csv(path, mode='a', header=0, encoding='utf-8')
+    df.to_csv(path, mode='a', header=0, encoding='gbk', errors='ignore')
 
 
 def getTorrent(url):
