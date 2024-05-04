@@ -6,7 +6,7 @@ import time
 import re
 from lxml import etree
 
-baseUrl = "https://javdb522.com/"
+baseUrl = "https://javdb525.com/"
 header = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0'}
 
