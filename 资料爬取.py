@@ -73,7 +73,7 @@ def getMetaData(url, page):
 
 def SaveData(path, data):
     df = pd.DataFrame(data)
-    df.to_csv(path, mode='a', header=0, encoding='gbk', errors='ignore')
+    df.to_csv(path, mode='a', header=0, encoding='utf-8-sig', errors='ignore')
 
 
 def getTorrent(url):
@@ -110,8 +110,8 @@ def retry_on_failure(func):
     try:
         result = func()
         return result
-    except:
-        print(f'错误, 暂停 3 秒')
+    except Exception as e:
+        print(f'错误{e}, 暂停 3 秒')
         time.sleep(3)
         return retry_on_failure(func)
 
